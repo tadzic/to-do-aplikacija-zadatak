@@ -9,7 +9,8 @@ const Tasks = () => {
   const [newCategory, setNewCategory] = useState("Posao");
 
   useEffect(() => {
-    const storedTasks = localStorage.getItem("allTasks");
+    //localStorage za trajno spremanje podataka, sessionStorage dok je tab otvoren
+    const storedTasks = sessionStorage.getItem("allTasks");
     if (storedTasks) {
       setAllTasks(JSON.parse(storedTasks));
     } else {
@@ -24,7 +25,7 @@ const Tasks = () => {
             apiTask: true,
           }));
           setAllTasks(apiTasks);
-          localStorage.setItem("allTasks", JSON.stringify(apiTasks));
+          sessionStorage.setItem("allTasks", JSON.stringify(apiTasks));
         })
         .catch(console.error);
     }
@@ -42,7 +43,7 @@ const Tasks = () => {
     };
     const updatedTasks = [...allTasks, newTask];
     setAllTasks(updatedTasks);
-    localStorage.setItem("allTasks", JSON.stringify(updatedTasks));
+    sessionStorage.setItem("allTasks", JSON.stringify(updatedTasks));
     setNewTitle("");
     setNewCategory("Posao");
   };
@@ -52,7 +53,7 @@ const Tasks = () => {
       task.id === id ? { ...task, completed: !task.completed } : task
     );
     setAllTasks(updated);
-    localStorage.setItem("allTasks", JSON.stringify(updated));
+    sessionStorage.setItem("allTasks", JSON.stringify(updated));
   };
 
   const filteredTasks = selectedCategory
@@ -63,7 +64,7 @@ const Tasks = () => {
     if (window.confirm("Jeste li sigurni da želite obrisati ovaj zadatak?")) {
       const updatedTasks = allTasks.filter((task) => task.id !== id);
       setAllTasks(updatedTasks);
-      localStorage.setItem("allTasks", JSON.stringify(updatedTasks));
+      sessionStorage.setItem("allTasks", JSON.stringify(updatedTasks));
     }
   };
 
