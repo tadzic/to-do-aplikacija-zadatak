@@ -1,5 +1,4 @@
 import Tasks from "./components/Tasks/Tasks";
-
 function App() {
   return (
     <>

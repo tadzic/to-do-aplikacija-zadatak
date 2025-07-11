@@ -19,7 +19,7 @@ const Tasks = () => {
           const apiTasks = data.map((task) => ({
             id: task.id,
             title: task.title,
-            completed: false,
+            completed: task.completed,
             category: "API",
             apiTask: true,
           }));
@@ -55,15 +55,17 @@ const Tasks = () => {
     localStorage.setItem("allTasks", JSON.stringify(updated));
   };
 
-  const handleDeleteTask = (id) => {
-    const updatedTasks = allTasks.filter((task) => task.id !== id);
-    setAllTasks(updatedTasks);
-    localStorage.setItem("allTasks", JSON.stringify(updatedTasks));
-  };
-
   const filteredTasks = selectedCategory
     ? allTasks.filter((task) => task.category === selectedCategory)
     : allTasks;
+
+  const handleDeleteTask = (id) => {
+    if (window.confirm("Jeste li sigurni da želite obrisati ovaj zadatak?")) {
+      const updatedTasks = allTasks.filter((task) => task.id !== id);
+      setAllTasks(updatedTasks);
+      localStorage.setItem("allTasks", JSON.stringify(updatedTasks));
+    }
+  };
 
   return (
     <div className="container py-4">
